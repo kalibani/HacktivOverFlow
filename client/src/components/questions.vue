@@ -10,9 +10,11 @@
             <router-link class="nav-link" :to="{ name: 'question', params: {id:1} }"><h4>title question</h4></router-link>
             <br>
             <div class="">
-              <br><p style="text-align:left; margin-left:40px;">Click a button to show an alert Click a button to show an alert Click a button to show an alert Click a button to show an alert Click a button to show an alert</p>
+              <br>
+              <p style="float:left;">Using v-html directive: <span v-html="rawHtml"></span></p>
+              <br>
             </div>
-            
+
             <hr>
           </div>
 

@@ -45,8 +45,9 @@
             <hr>
           </div>
           <div class="form-group"style="margin-top:10%;">
-            <label style="float:left;">Your Answer</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
+            <h4 style="float:left">Your Answer</h4>
+            <br><br>
+            <vue-editor v-model="answer.isi"></vue-editor>
           </div>
           <div class="" style="float:left"><button @click="addAnswer" class="btn btn-primary   btn-md btn-block">Submit</button></div>
         </div>
@@ -55,7 +56,18 @@
 </template>
 
 <script>
+import { VueEditor } from 'vue2-editor'
 export default {
+  data(){
+    return {
+      answer: {
+        isi: ''
+      }
+    }
+  },
+  components:{
+    VueEditor
+  },
   methods:{
     addAnswer(){
 

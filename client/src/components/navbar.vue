@@ -15,12 +15,12 @@
         <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
       </form>
     </ul>
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav ml-auto" v-if="show">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Already Have Account?
         </a>
-        <div class="row" style="width: 300px; padding-right:30%;">
+        <div class="row" style="width: 300px; padding-right:10%;">
           <div class="col-md-12">
             <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 300px; padding-right:30%;">
               <a class="dropdown-item" href="#" style="padding-left:5%;">Login</a>
@@ -31,14 +31,18 @@
                 <div class="form-group">
                   <input type="password" style="margin-left:10px;" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary btn-sm" style="margin-left:5%;">Sign in</button>
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-left:5%;" @click.prevent="hide">Sign in</button>
               </form>
             </div>
           </div>
         </div>
       </li>
     </ul>
-
+    <div class="" v-else>
+      <button type="button" class="btn btn-sm btn-default" name="button">
+        <i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out
+      </button>
+    </div>
   </div>
 </nav>
   </div>
@@ -46,6 +50,16 @@
 
 <script>
 export default {
+  data(){
+    return {
+      show : true
+    }
+  },
+  methods: {
+    hide(){
+      this.show = false
+    }
+  }
 }
 </script>
 

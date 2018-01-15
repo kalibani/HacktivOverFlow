@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="">
-  <div class="container">
+  <div class="container" v-if="show">
+    <div class="">
+      <img src="http://www.tedgoas.com/content/blog/22-stack-overflow-design/-stack-overflow-cover.jpg" alt="" style="width:40%;">
+    </div>
     <div class="row">
       <div class="col-md-6">
         <br>
@@ -27,13 +30,33 @@
     </div>
     </div>
   </div>
+  <div class="" v-else>
+    <appQuestions/>
+  </div>
 </div>
 </template>
 
 <script>
+import questions from './questions.vue'
 export default {
+  data(){
+    return {
+      show: true
+    }
+  },
   components:{
-
+    appQuestions : questions
+  },
+  created(){
+    this.hideForm()
+  },
+  methods:{
+    hideForm(){
+      let token = localStorage.getItem('token')
+      if (token) {
+        this.show = false
+      }
+    }
   }
 }
 </script>
@@ -43,7 +66,7 @@ body {
 }
 
 .row > div {
-  margin-top: 10%;
+  margin-top: 2%;
   margin-left: 22%;
   margin-right: 17%;
   border: #cdcdcd thin solid;

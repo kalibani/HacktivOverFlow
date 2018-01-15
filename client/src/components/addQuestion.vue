@@ -9,10 +9,7 @@
           <label>Title</label>
           <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Question">
           </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Question</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="question"></textarea>
-          </div>
+          <vue-editor v-model="answer.isi"></vue-editor>
         <button type="submit" class="btn btn-success" style="margin: 5px 0 10px; 10px;">Add Question</button>
       </form>
     </div>
@@ -25,9 +22,19 @@
 
 <script>
 import navbar from './navbar.vue'
+import { VueEditor } from 'vue2-editor'
 export default {
   components:{
-    appNavbar : navbar
+    appNavbar : navbar,
+    VueEditor
+  },
+  data(){
+    return {
+      answer: {
+        title: '',
+        isi: ''
+      }
+    }
   }
 }
 </script>
