@@ -10,21 +10,21 @@
       <form>
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+          <input type="email" class="form-control" aria-describedby="emailHelp" v-model="users.email" placeholder="Enter email">
           </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" v-model="users.password" placeholder="Password">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Username</label>
-          <input type="text" class="form-control" placeholder="Username">
+          <input type="text" class="form-control" v-model="users.username"placeholder="Username">
         </div>
         <div class="form-group">
           <label for="exampleInputPassword1">Fullname</label>
-          <input type="text" class="form-control" placeholder="Fullname">
+          <input type="text" class="form-control" v-model="users.fullname"placeholder="Fullname">
         </div>
-        <button type="submit" class="btn btn-success">Sign Up</button>
+        <button type="button" class="btn btn-success" @click="register(users).then(clear)">Sign Up</button>
       </form>
       <br>
     </div>
@@ -37,10 +37,17 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import questions from './questions.vue'
 export default {
   data(){
     return {
+      users:{
+        email:'',
+        password:'',
+        username:'',
+        fullname:''
+      },
       show: true
     }
   },
@@ -56,6 +63,10 @@ export default {
       if (token) {
         this.show = false
       }
+    },
+    ...mapActions(['register']),
+    clear(){
+      this.users = {}
     }
   }
 }

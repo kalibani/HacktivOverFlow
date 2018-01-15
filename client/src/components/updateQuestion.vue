@@ -10,7 +10,7 @@
           <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="title">
           </div>
           <vue-editor v-model="answer.isi"></vue-editor>
-        <button type="submit" class="btn btn-success" style="margin: 5px 0 10px; 10px;">Add Question</button>
+        <button type="submit" class="btn btn-success" style="margin: 5px 0 10px; 10px;">Update Question</button>
       </form>
     </div>
     <br>

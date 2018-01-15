@@ -4,6 +4,7 @@ import questions from '@/components/questions'
 import question from '@/components/question'
 import register from '@/components/register'
 import addQuestion from '@/components/addQuestion'
+import updateQuestion from '@/components/updateQuestion'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/question/:id',
       name: 'question',
       component: question
+    },
+    {
+      path: '/question/edit/:id',
+      name: 'updateQuestion',
+      component: updateQuestion
     },
     {
       path: '/addquestion',
