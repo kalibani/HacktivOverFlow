@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light boom">
+      <router-link class="navbar-brand" :to="{ name: 'register' }"><strong>hacktiv overflow</strong></router-link>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,30 +9,36 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <router-link class="nav-link" :to="{ name: 'questions' }">Questions<span class="sr-only">(current)</span></router-link>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
+      <form class="form-inline my-2 my-lg-0" id="search" style="margin-left:25px;">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search..." aria-label="Search">
+      </form>
+    </ul>
+    <ul class="navbar-nav ml-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
+          Already Have Account?
         </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+        <div class="row" style="width: 300px; padding-right:30%;">
+          <div class="col-md-12">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 300px; padding-right:30%;">
+              <a class="dropdown-item" href="#" style="padding-left:5%;">Login</a>
+              <form>
+                <div class="form-group">
+                  <input type="email" class="form-control" style="margin-left:10px;" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                  <input type="password" style="margin-left:10px;" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm" style="margin-left:5%;">Sign in</button>
+              </form>
+            </div>
+          </div>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+
   </div>
 </nav>
   </div>
@@ -43,5 +49,6 @@ export default {
 }
 </script>
 
-<style lang="css">
-</style>
+<style scoped="" lang="css">
+
+<style>

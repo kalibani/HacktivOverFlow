@@ -22,6 +22,7 @@ export default {
 <style>
 body {
   margin: 0;
+  background-color: #FFFFFF;
 }
 
 #app {
@@ -37,7 +38,7 @@ main {
 }
 
 header {
-  margin: 0;
+  margin: 30px;
   height: 56px;
   padding: 0 16px 0 24px;
   color: #ffffff;
