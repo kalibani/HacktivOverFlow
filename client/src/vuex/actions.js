@@ -20,7 +20,6 @@ export const getAllQuestion = ({ commit }) => {
 }
 
 export const getQuestionById = ({ commit }, id) => {
-  console.log('----',id);
   http.get('/question/' + id)
   .then(({data}) => {
     commit('saveQuestionById', data)
@@ -59,18 +58,18 @@ export const login = ({ commit }, payload) => {
 }
 
 export const getProfile = ({ commit }) => {
-  http.post('/auth/profile')
-  .then(({data}) => {
-    let token = localStorage.getItem('token')
-    if (token) {
+  let token = localStorage.getItem('token')
+  if (token) {
+    http.post('/auth/profile')
+    .then(({data}) => {
       commit('saveUser', data)
-    } else {
-      console.log('belum login');
-    }
-  })
-  .catch((err) => {
-    console.log(err)
-  })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } else {
+    console.log('belum login');
+  }
 }
 
 export const register = ({ commit }, payload) => {
@@ -96,6 +95,139 @@ export const register = ({ commit }, payload) => {
     console.log(err)
   })
 }
+
+export const getAnswers = ({ commit }) => {
+  http.get('/answer')
+  .then(({data}) => {
+    commit('saveAnswers', data)
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+export const questionLike = ({ commit }, id) => {
+  let token = localStorage.getItem('token')
+  if (token) {
+    http.put('/question/upvote/'+id)
+    .then(({data}) => {
+      if (data.message === 'likes') {
+        commit('saveQuestionLike', data)
+        swal({
+          text: 'like',
+          timer: 1000,
+          icon: 'success',
+          button: 'OK'
+        })
+      }
+
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } else {
+    swal({
+      title: 'error',
+      text: 'You need login first',
+      icon: 'error',
+      button: 'OK'
+    })
+  }
+}
+
+export const questionDislike = ({ commit }, id) => {
+  let token = localStorage.getItem('token')
+  if (token) {
+    http.put('/question/downvote/'+id)
+    .then(({data}) => {
+      if (data.message === 'dislike') {
+        commit('saveQuestionDislike', data)
+        swal({
+          text: 'dislike',
+          timer: 1000,
+          icon: 'success',
+          button: 'OK'
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } else {
+    swal({
+      title: 'error',
+      text: 'You need login first',
+      icon: 'error',
+      button: 'OK'
+    })
+  }
+}
+
+export const answerLike = ({ commit }, id) => {
+  let token = localStorage.getItem('token')
+  if (token) {
+    http.put('/answer/upvote/'+id)
+    .then(({data}) => {
+      if (data.message === 'likes') {
+        commit('saveAnswerLike', data)
+        swal({
+          text: 'likes',
+          timer: 1000,
+          icon: 'success',
+          button: 'OK'
+        }).then(location.reload())
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } else {
+    swal({
+      title: 'error',
+      text: 'You need login first',
+      icon: 'error',
+      button: 'OK'
+    })
+  }
+}
+
+export const answerDislike = ({ commit }, id) => {
+  let token = localStorage.getItem('token')
+  if (token) {
+    http.put('/answer/downvote/'+id)
+    .then(({data}) => {
+      if (data.message === 'dislike') {
+        commit('saveAnswerDislike', data)
+        swal({
+          text: 'dislike',
+          timer: 1000,
+          icon: 'success',
+          button: 'OK'
+        }).then(location.reload())
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } else {
+    swal({
+      title: 'error',
+      text: 'You need login first',
+      icon: 'error',
+      button: 'OK'
+    })
+  }
+}
+
+// export const getAnswers = ({ commit }) => {
+//   http.get('/answer')
+//   .then(({data}) => {
+//     commit('saveAnswers', data)
+//   })
+//   .catch((err) => {
+//     console.log(err)
+//   })
+// }
 
 // export const addBook = ({ commit }, payload) => {
 //   console.log('payload addbook', payload)
