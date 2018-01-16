@@ -7,10 +7,10 @@
       <form>
         <div class="form-group">
           <label>Title</label>
-          <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="title">
+          <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="title" v-model="question.title">
           </div>
-          <vue-editor v-model="answer.isi"></vue-editor>
-        <button type="submit" class="btn btn-success" style="margin: 5px 0 10px; 10px;">Update Question</button>
+          <vue-editor v-model="question.isi"></vue-editor>
+        <button type="button" class="btn btn-success" style="margin: 5px 0 10px; 10px;" @click="editQuestion(question._id)">Update Question</button>
       </form>
     </div>
     <br>
@@ -21,19 +21,35 @@
 </template>
 
 <script>
-import navbar from './navbar.vue'
+import { mapActions, mapState } from 'vuex'
 import { VueEditor } from 'vue2-editor'
 export default {
   components:{
-    appNavbar : navbar,
     VueEditor
   },
-  data(){
-    return {
-      answer: {
-        title: '',
-        isi: ''
+  watch: {
+    '$route' (to, from) {
+      this.getQuestionById(this.$route.params.id)
+    }
+  },
+  computed:{
+    ...mapState(['question'])
+  },
+  created(){
+    this.getQuestionById(this.$route.params.id)
+  },
+  methods:{
+    ...mapActions([
+      'getQuestionById',
+      'updateQuestion'
+    ]),
+    editQuestion (id) {
+      let obj = {
+        id: id,
+        title: this.question.title,
+        isi: this.question.isi
       }
+      this.updateQuestion(obj)
     }
   }
 }

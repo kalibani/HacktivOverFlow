@@ -12,6 +12,7 @@ export const saveUser = (state, payload) => {
 
 export const saveAnswers = (state, payload) => {
   state.answers = payload
+  console.log(state.answers);
 }
 
 export const saveQuestionLike = (state, payload) => {
@@ -25,7 +26,7 @@ export const saveQuestionDislike = (state, payload) => {
 export const saveAnswerLike = (state, payload) => {
   let index = state.answers.findIndex( a => a._id === payload.data._id)
   if (index !== -1) {
-    state.answers[index] = payload.data
+    state.answers.splice(index, 1, payload.data)
   } else {
     state.answers.push(payload.data)
   }
@@ -35,26 +36,29 @@ export const saveAnswerLike = (state, payload) => {
 export const saveAnswerDislike = (state, payload) => {
   let index = state.answers.findIndex( a => a._id === payload.data._id)
   if (index !== -1) {
-    state.answers[index] = payload.data
+    state.answers.splice(index, 1, payload.data)
   } else {
     state.answers.push(payload.data)
   }
 }
 
-// export const saveBooks = (state, payload) => {
-//   console.log('payload saveBooks', payload.dataArticle)
-//   state.articles.push(payload.dataArticle)
-// }
-//
-// export const saveEditedBooks = (state, payload) => {
-//   console.log('payload mutations', payload.updatedArticle._id)
-//   let index = state.articles.indexOf(payload.updatedArticle._id)
-//   state.articles.splice(index, 1, payload.updatedArticle)
-// }
-//
-// export const saveDeletedBooks = (state, payload) => {
-//   console.log('payload mutations delete', payload)
-//   let index = state.articles.indexOf(payload._id)
-//   state.articles.splice(index, 1)
-//   console.log(state.articles)
-// }
+export const saveAddQuestions = (state, payload) => {
+  state.questions.push(payload.data)
+}
+
+export const saveUpdateQuestions = (state, payload) => {
+  state.question = payload.data
+}
+
+export const saveAddAnswers = (state, payload) => {
+  console.log('sebelum di push', state.answers);
+  console.log('ini apa', payload.dataanswer);
+  state.answers.push(payload.dataanswer)
+  console.log('cek',state.answers)
+}
+export const saveDelete = (state, payload) => {
+  let index = state.answers.findIndex( a => a._id === payload.result._id)
+  if (index !== -1) {
+    state.answers.splice(index, 1)
+  }
+}

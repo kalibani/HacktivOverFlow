@@ -7,10 +7,10 @@
       <form>
         <div class="form-group">
           <label>Title</label>
-          <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="title">
+          <input type="text" v-model="answer.title" class="form-control" aria-describedby="emailHelp" placeholder="title">
           </div>
           <vue-editor v-model="answer.isi"></vue-editor>
-        <button type="submit" class="btn btn-success" style="margin: 5px 0 10px; 10px;">Add Question</button>
+        <button type="button" class="btn btn-success" style="margin: 5px 0 10px; 10px;" @click.prevent="addQuestion(answer)">Add Question</button>
       </form>
     </div>
     <br>
@@ -21,11 +21,10 @@
 </template>
 
 <script>
-import navbar from './navbar.vue'
+import { mapActions } from 'vuex'
 import { VueEditor } from 'vue2-editor'
 export default {
   components:{
-    appNavbar : navbar,
     VueEditor
   },
   data(){
@@ -35,6 +34,9 @@ export default {
         isi: ''
       }
     }
+  },
+  methods:{
+    ...mapActions(['addQuestion'])
   }
 }
 </script>

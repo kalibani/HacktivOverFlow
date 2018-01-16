@@ -4,7 +4,7 @@ import swal from 'sweetalert'
 
 const token = localStorage.getItem('token')
 const http = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'http://hacktivoverflow-api.kautzaralibani.com/api',
   headers: {
     Authorization: token
   }
@@ -96,9 +96,11 @@ export const register = ({ commit }, payload) => {
   })
 }
 
-export const getAnswers = ({ commit }) => {
-  http.get('/answer')
+export const getAnswers = ({ commit }, id) => {
+  console.log('ini id', id);
+  http.get('/answer/'+id)
   .then(({data}) => {
+    console.log('nih', data);
     commit('saveAnswers', data)
   })
   .catch((err) => {
@@ -115,7 +117,7 @@ export const questionLike = ({ commit }, id) => {
         commit('saveQuestionLike', data)
         swal({
           text: 'like',
-          timer: 1000,
+          timer: 800,
           icon: 'success',
           button: 'OK'
         })
@@ -144,7 +146,7 @@ export const questionDislike = ({ commit }, id) => {
         commit('saveQuestionDislike', data)
         swal({
           text: 'dislike',
-          timer: 1000,
+          timer: 800,
           icon: 'success',
           button: 'OK'
         })
@@ -168,14 +170,14 @@ export const answerLike = ({ commit }, id) => {
   if (token) {
     http.put('/answer/upvote/'+id)
     .then(({data}) => {
+      commit('saveAnswerLike', data)
       if (data.message === 'likes') {
-        commit('saveAnswerLike', data)
         swal({
           text: 'likes',
-          timer: 1000,
+          timer: 800,
           icon: 'success',
           button: 'OK'
-        }).then(location.reload())
+        })
       }
     })
     .catch((err) => {
@@ -196,14 +198,14 @@ export const answerDislike = ({ commit }, id) => {
   if (token) {
     http.put('/answer/downvote/'+id)
     .then(({data}) => {
+      commit('saveAnswerDislike', data)
       if (data.message === 'dislike') {
-        commit('saveAnswerDislike', data)
         swal({
           text: 'dislike',
-          timer: 1000,
+          timer: 800,
           icon: 'success',
           button: 'OK'
-        }).then(location.reload())
+        })
       }
     })
     .catch((err) => {
@@ -219,82 +221,102 @@ export const answerDislike = ({ commit }, id) => {
   }
 }
 
-// export const getAnswers = ({ commit }) => {
-//   http.get('/answer')
-//   .then(({data}) => {
-//     commit('saveAnswers', data)
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// }
+export const addQuestion = ({ commit }, payload) => {
+  http.post('/question', payload)
+  .then(({data}) => {
+    commit('saveAddQuestions', data)
+    if (data.message === 'Question Succesfully Added!') {
+      swal({
+        text: data.message,
+        icon: 'success',
+        button: 'OK'
+      }).then(() => {
+        router.push('/questions')
+      })
+    }
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
 
-// export const addBook = ({ commit }, payload) => {
-//   console.log('payload addbook', payload)
-//   let book = new FormData()
-//   book.append('title', payload.title)
-//   book.append('author', payload.author)
-//   book.append('content', payload.content)
-//   book.append('image', payload.image)
-//   http.post('/articles', book)
-//   .then(({data}) => {
-//     console.log(data)
-//     commit('saveBooks', data)
-//     swal({
-//       title: 'OK',
-//       text: data.message,
-//       icon: 'success',
-//       button: 'OK'
-//     }).then(() => {
-//       router.push('/admin')
-//     })
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// }
-//
-// export const editBook = ({ commit }, payload) => {
-//   console.log('payload editbook', payload)
-//   let book = new FormData()
-//   book.append('title', payload.title)
-//   book.append('author', payload.author)
-//   book.append('content', payload.content)
-//   book.append('image', payload.image)
-//   http.put('/articles/' + payload.id, book)
-//   .then(({data}) => {
-//     console.log(data)
-//     commit('saveEditedBooks', data)
-//     swal({
-//       title: 'OK',
-//       text: data.message,
-//       icon: 'success',
-//       button: 'OK'
-//     }).then(() => {
-//       router.push('/admin')
-//     })
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// }
-//
-// export const deletedBook = ({ commit }, id) => {
-//   console.log('payload deletedBook', id)
-//   http.delete('/articles/' + id)
-//   .then(({data}) => {
-//     console.log(data)
-//     commit('saveDeletedBooks', data)
-//     swal({
-//       title: 'OK',
-//       text: 'book succesfully deleted',
-//       icon: 'success',
-//       button: 'OK'
-//     }).then(() => {
-//       router.push('/admin')
-//     })
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// }
+export const updateQuestion = ({ commit }, payload) => {
+  http.put('/question/update/'+ payload.id, payload)
+  .then(({data}) => {
+    commit('saveUpdateQuestions', data)
+    if (data.message === 'Update Success') {
+      swal({
+        text: data.message,
+        icon: 'success',
+        button: 'OK'
+      }).then(() => {
+        router.push('/question/'+payload.id)
+      })
+    }
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+export const deleteQuestion = ({ commit }, id) => {
+  http.delete('/question/'+ id)
+  .then(({data}) => {
+    if (data.message === "Question successfully deleted!") {
+      swal({
+        text: data.message,
+        icon: 'success',
+        button: 'OK'
+      }).then(() => {
+        router.push('/questions')
+      })
+    }
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
+export const addAnswer = ({ commit }, payload) => {
+  let token = localStorage.getItem('token')
+  if (token) {
+    http.post('/answer', payload)
+    .then(({data}) => {
+      commit('saveAddAnswers', data)
+      if (data.message === 'Answer Succesfully Added!') {
+        swal({
+          text: data.message,
+          icon: 'success',
+          button: 'OK'
+        })
+      }
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  } else {
+    swal({
+      title: 'error',
+      text: 'You need login first',
+      icon: 'error',
+      button: 'OK'
+    })
+  }
+}
+
+export const deleteAnswer = ({ commit }, id) => {
+  http.delete('/answer/'+ id)
+  .then(({data}) => {
+    if (data.message === "Answer successfully deleted!") {
+      commit('saveDelete', data)
+      swal({
+        text: data.message,
+        icon: 'success',
+        button: 'OK'
+      })
+    }
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}

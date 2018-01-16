@@ -28,12 +28,40 @@ export default new Router({
     {
       path: '/question/edit/:id',
       name: 'updateQuestion',
-      component: updateQuestion
+      component: updateQuestion,
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token')
+        if (token) {
+          next()
+        } else {
+          swal({
+            title: 'Ooops',
+            text: `You don't Have Access! `,
+            icon: 'error',
+            button: 'OK'
+          })
+          next('/')
+        }
+      }
     },
     {
       path: '/addquestion',
       name: 'addQuestion',
-      component: addQuestion
+      component: addQuestion,
+      beforeEnter: (to, from, next) => {
+        const token = localStorage.getItem('token')
+        if (token) {
+          next()
+        } else {
+          swal({
+            title: 'Ooops',
+            text: `You don't Have Access! `,
+            icon: 'error',
+            button: 'OK'
+          })
+          next('/')
+        }
+      }
     }
   ],
   mode : 'history'

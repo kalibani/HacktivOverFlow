@@ -5,16 +5,17 @@
           <div class="" style="float:right"><button @click="addQuestion" class="btn btn-secondary btn-sm btn-block">Ask Question</button></div>
           <br>
           <hr>
-          <div class="" v-for="q in questions">
+          <div class="" v-for="q in questions" v-if="q.downvote || q.upvote">
             <p style="float:right">votes {{q.downvote.length + q.upvote.length}}</p>
             <router-link class="nav-link" :to="{ name: 'question', params: {id:q._id} }"><h4>{{q.title}}</h4></router-link>
             <br>
             <div class="">
               <br>
-              <p style="float:left;"><span v-html="q.isi"></span></p>
+              <div class="col-md-8" style="margin-left:15%;">
+                <p style="text-align:left;"><span v-html="q.isi"></span></p>
+              </div>
               <br>
             </div>
-
             <hr>
           </div>
 
